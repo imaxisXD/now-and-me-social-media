@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { ChangeEvent, useState } from "react"
 import { Button } from "./ui/button"
 import {
     Card,
@@ -13,8 +14,38 @@ import {
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 
+interface LoginCardProps {
+    handleAlert: () => void,
+}
 
-export function LoginCard() {
+export function LoginCard({ handleAlert }: LoginCardProps) {
+    const [user, setUser] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+
+    function handleShowPassword() {
+        setShowPassword(prev => !prev);
+    }
+    function handleLogin() {
+        if (user && password) {
+
+        }
+        else handleAlert();
+    }
+    function handleKeyChange(e: ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target;
+        console.log(name, value);
+        switch (name) {
+            case 'email':
+                setUser(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
+            default:
+                break;
+        }
+    }
     return (
         <Card className="w-full md:w-3/4 max-w-md h-2/4 max-h-md border-none bg-gradient-to-br p-0.5 from-[#969696] to-[#343434]">
             <div className="bg-[#27292D] rounded-lg">
@@ -27,8 +58,7 @@ export function LoginCard() {
                 <CardContent className="grid gap-4 mt-5">
                     <div className="grid gap-2 ">
                         <Label htmlFor="email" className="text-[#C5C7CA]">Email or Username</Label>
-
-                        <Input id="email" type="email" className="placeholder:text-[#7F8084] border-[#35373B]" placeholder="Enter your email or username" />
+                        <Input id="email" name="email" type="email" onChange={handleKeyChange} className="placeholder:text-[#7F8084] border-[#35373B]" placeholder="Enter your email or username" />
                     </div>
                     <div className="grid gap-2">
                         <div className="flex justify-between items-center">
@@ -36,21 +66,21 @@ export function LoginCard() {
                             <span className="text-[#C5C7CA] inline text-xs">Forgot password?</span>
                         </div>
                         <div className="relative">
-                            <Input id="password" type="password" className="placeholder:text-[#7F8084] border-[#35373B] " placeholder="Enter your password" />
+                            <Input name="password" id="password" type={showPassword ? 'text' : 'password'} onChange={handleKeyChange} className="placeholder:text-[#7F8084] border-[#35373B] " placeholder="Enter your password" />
                             <Image width={20} height={20}
-                                className="absolute top-1/2 transform -translate-y-1/2 right-4"
+                                className="absolute top-1/2 transform -translate-y-1/2 right-4 cursor-pointer"
                                 alt="show password"
                                 src="/eye.svg"
+                                onClick={handleShowPassword}
                             />
                         </div>
                     </div>
-                    <Button className="w-full bg-btnBlue text-base font-normal	">Login now</Button>
+                    <Button className="w-full bg-btnBlue text-base font-normal" onClick={handleLogin}>Login now</Button>
                 </CardContent>
                 <CardFooter className="text-xs font-medium">
                     <span className="text-[#7F8084]">Not registered yet?<span className="text-[#C5C7CA]"> Register →</span></span>
                 </CardFooter>
             </div>
-
         </Card>
     )
 }
