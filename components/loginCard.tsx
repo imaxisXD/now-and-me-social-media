@@ -28,10 +28,11 @@ export function LoginCard({ handleAlert }: LoginCardProps) {
     }
     function handleLogin() {
         if (user && password) {
-
+            loginCaller();
         }
         else handleAlert();
     }
+
     function handleKeyChange(e: ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
         console.log(name, value);
@@ -46,6 +47,25 @@ export function LoginCard({ handleAlert }: LoginCardProps) {
                 break;
         }
     }
+    async function loginCaller() {
+        const data = { username: user, password: password }
+        try {
+            const response = await fetch('/api/login', {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                body: JSON.stringify(data), // body data type must match "Content-Type" header
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+            }
+            else {
+                throw new Error('Request failed with status ' + response.status);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     return (
         <Card className="w-full md:w-3/4 max-w-md h-2/4 max-h-md border-none bg-gradient-to-br p-0.5 from-[#969696] to-[#343434]">
             <div className="bg-[#27292D] rounded-lg">
