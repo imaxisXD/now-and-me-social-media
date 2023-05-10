@@ -24,6 +24,8 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         customBg: "var(--bg-black)",
+        greyed: "#6B6C70",
+        btnBlue: "#4A96FF",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

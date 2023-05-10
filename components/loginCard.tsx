@@ -11,49 +11,30 @@ import {
 } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
-import { Github } from 'lucide-react'
+
 
 export function LoginCard() {
     return (
-        <Card>
-            <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl">Create an account</CardTitle>
-                <CardDescription>
-                    Enter your email below to create your account
+        <Card className="w-2/4 h-2/4 max-w-md max-h-md bg-[#27292D]">
+            <CardHeader className="space-y-1 text-center">
+                <CardTitle className="text-xs text-greyed tracking-wide">WELCOME BACK</CardTitle>
+                <CardDescription className="font-semibold text-sm text-white">
+                    Log into your account
                 </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-                <div className="grid grid-cols-2 gap-6">
-                    <Button variant="outline">
-                        <Github className="mr-2 h-4 w-4" />
-                        Github
-                    </Button>
-                    <Button variant="outline">
-                        <Github className="mr-2 h-4 w-4" />
-                        Google
-                    </Button>
-                </div>
-                <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-background px-2 text-muted-foreground">
-                            Or continue with
-                        </span>
-                    </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="email" className="text-[#C5C7CA]">Email or Username</Label>
+                    <Input id="email" type="email" className="text-[#7F8084]" placeholder="Enter your email or username" />
                 </div>
                 <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="m@example.com" />
+                    <Label htmlFor="password" className="text-[#C5C7CA]">Password</Label>
+                    <Input id="password" type="password" className="text-[#7F8084]" placeholder="Enter your password" />
                 </div>
-                <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input id="password" type="password" />
-                </div>
+                <Button className="w-full bg-btnBlue text-base font-normal	">Login now</Button>
             </CardContent>
-            <CardFooter>
-                <Button className="w-full">Create account</Button>
+            <CardFooter className="text-xs font-medium">
+                <span className="text-[#7F8084]">Not registered yet?<span className="text-[#C5C7CA]"> Register →</span></span>
             </CardFooter>
         </Card>
     )
