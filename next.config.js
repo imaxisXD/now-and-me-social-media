@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
-
 module.exports = {
-    /* config options here */
+    images: {
+
+        domains: ['avatars.githubusercontent.com', 'i.pravatar.cc'],
+    },
 }
