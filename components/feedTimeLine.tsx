@@ -1,16 +1,27 @@
-"use client";
+
 import {
     Card,
     CardContent,
     CardFooter,
 } from "./ui/card";
-import { feedData } from "../src/lib/feedData"
 import Image from "next/image";
 
-export function FeedTimeLine() {
+interface NewPost {
+    imageURL: string;
+    name: string;
+    emoji: string;
+    time: string;
+    content: string;
+    comments: number;
+}
+interface FeedTimeLineProps {
+    feedPosts: NewPost[];
+}
+
+export function FeedTimeLine({ feedPosts }: FeedTimeLineProps) {
     return (
         <>
-            {feedData.map((post, index) => (
+            {feedPosts.map((post, index) => (
                 <Card key={index} className="w-full md:w-3/4 max-w-[700px] h-auto max-h-md border-2 border-[#35373B] bg-[#27292D] mt-1 mb-1">
                     <CardContent className="grid gap-4 mt-5 ">
                         <div className="flex justify-between">
@@ -36,8 +47,10 @@ export function FeedTimeLine() {
                             </div>
                         </div>
                     </CardContent>
-                    <CardFooter className="text-xs font-medium">
-                        <span className="text-base font-normal" >{post.comments} Comments</span>
+                    <CardFooter>
+                        <span className="text-xs font-normal text-[#7F8084]" >
+                            <Image src='/comment.svg' alt='comments' width={20} height={20} className='inline-block mr-2' />
+                            {post.comments} Comments</span>
                     </CardFooter>
                 </Card>
             ))}

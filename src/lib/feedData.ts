@@ -1,6 +1,6 @@
 
 
-export const feedData = [
+export let feedData = [
     {
         imageURL: 'https://avatars.githubusercontent.com/u/56172425?v=4',
         name: 'Abhishek',
