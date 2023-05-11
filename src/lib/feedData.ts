@@ -28,7 +28,7 @@ export const feedData = [
         comments: 0
     },
     {
-        imageURL: 'https://i.pravatar.cc/100',
+        imageURL: '/avatar.svg',
         name: 'John Doe',
         emoji: '😄',
         time: '10mins ago',
@@ -36,7 +36,7 @@ export const feedData = [
         comments: 12
     },
     {
-        imageURL: 'https://i.pravatar.cc/100',
+        imageURL: '/avatar2.svg',
         name: 'Jane Smith',
         emoji: '🌞',
         time: '15mins ago',

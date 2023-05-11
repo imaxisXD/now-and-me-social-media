@@ -14,7 +14,7 @@ type CardProps = React.ComponentProps<typeof Card>
 
 export function FeedPost() {
     return (
-        <Card className="w-full md:w-3/4 max-w-[700px] h-auto max-h-md border-2 border-[#35373B] bg-[#27292D]">
+        <Card className="w-full md:w-3/4 max-w-[700px] h-auto max-h-md border-2 border-[#35373B] bg-[#27292D] mb-1">
             <CardContent className="grid gap-4 mt-5 ">
                 <p className="text-[#C5C7CA]">Create post</p>
                 <div className="grid gap-2 bg-[#191920] p-3 h-auto rounded-lg">
