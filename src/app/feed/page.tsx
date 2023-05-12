@@ -2,9 +2,10 @@
 import { FeedPost } from "../../../components/feedPost"
 import { FeedTimeLine } from "../../../components/feedTimeLine"
 import { feedData } from "@/lib/feedData";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import CardWrapper from "../../../components/cardWrapper";
 import { UserStatusContext } from "@/app/userStatus"
+import AlertCard from "../../../components/alertCard";
 
 
 interface NewPost {
@@ -41,6 +42,7 @@ export default function Feed() {
             <FeedTimeLine feedPosts={feedPosts} />
             {(showModal) &&
                 <div className="fixed inset-0 flex items-center justify-center backdrop-filter backdrop-blur bg-opacity-90">
+                    <AlertCard />
                     <CardWrapper cardName="register" modal={true} closeModal={closeModal} />
                 </div>
             }
