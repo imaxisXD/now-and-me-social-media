@@ -24,6 +24,7 @@ interface RegisterCardProps {
 export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCardProps) {
     const router = useRouter();
     const [user, setUser] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
@@ -46,25 +47,27 @@ export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCar
         const { name, value } = e.target;
         switch (name) {
             case 'email':
-                setUser(value);
+                setEmail(value);
                 break;
             case 'password':
                 setPassword(value);
+            case 'user':
+                setUser(value);
                 break;
             default:
                 break;
         }
     }
     async function registerCaller() {
-        const data = { username: user, password: password }
+        const data = { username: user, password: password, email: email }
         try {
             const response = await fetch('/api/register', {
                 method: "POST",
                 body: JSON.stringify(data),
             });
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
+            if (response.ok && response.status === 200) {
+                router.push('/feed');
+
             }
             else {
                 throw new Error('Request failed with status ' + response.status);

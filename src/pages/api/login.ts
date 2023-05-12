@@ -15,8 +15,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 function handleLogin(req: NextApiRequest, res: NextApiResponse) {
     const reqData = JSON.parse(req.body);
-    console.log(reqData);
-
     const { username, password } = reqData as { username: string, password: string };
     console.log(username, password);
 
