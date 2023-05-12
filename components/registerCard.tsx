@@ -65,7 +65,7 @@ export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCar
                 method: "POST",
                 body: JSON.stringify(data),
             });
-            if (response.ok && response.status === 200) {
+            if (response.ok && response.status === 201) {
                 router.push('/feed');
 
             }
