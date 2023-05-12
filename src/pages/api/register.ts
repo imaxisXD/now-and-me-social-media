@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
+import { serialize } from 'cookie';
 
 
 
@@ -11,9 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 function handleRegistration(req: NextApiRequest, res: NextApiResponse) {
-
-    let response = NextResponse.next();
-    response.cookies.set('isLoggedIn', 'true', { path: '/' });
+    res.setHeader('Set-Cookie', serialize('isLoggedIn', 'true', { path: '/', sameSite: 'lax' }))
     res.status(201).json({ success: true });
 }
 
