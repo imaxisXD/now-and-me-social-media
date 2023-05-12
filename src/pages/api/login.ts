@@ -4,10 +4,7 @@ import { usersDatabse } from '@/lib/userDatabase';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
-
-
         handleLogin(req, res);
-
     } else {
         res.status(405).end(); // Method Not Allowed
     }
@@ -16,8 +13,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 function handleLogin(req: NextApiRequest, res: NextApiResponse) {
     const reqData = JSON.parse(req.body);
     const { username, password } = reqData as { username: string, password: string };
-    console.log(username, password);
-
     if (username && password) {
         if (usersDatabse.has(username) && usersDatabse.get(username) === password) {
             res.setHeader('Set-Cookie', serialize('isLoggedIn', 'true', { path: '/', sameSite: 'lax' }))

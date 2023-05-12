@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "../components/ui/button"
 import {
     Card,
@@ -7,6 +7,7 @@ import {
     CardFooter,
 } from "../components/ui/card"
 import { Textarea } from "./ui/textarea";
+import { UserStatusContext } from "@/app/userStatus"
 
 
 interface NewPost {
@@ -19,28 +20,32 @@ interface NewPost {
 }
 interface FeedPostProp {
     setFeedPosts: (newPost: NewPost) => void;
-    toggleModal: () => void;
+    openModal: () => void;
 }
-export function FeedPost({ setFeedPosts, toggleModal }: FeedPostProp) {
+export function FeedPost({ setFeedPosts, openModal }: FeedPostProp) {
     const [post, setPost] = useState('');
+    const userStatus = useContext(UserStatusContext);
+
     function handlePost(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        toggleModal();
-        if (post) {
-
-            const newPost: NewPost = {
-                imageURL: '/logocolor.svg',
-                name: 'Now&Me',
-                emoji: '🔥',
-                time: 'Recent',
-                content: post,
-                comments: 0
+        if (userStatus?.isLoggedIn) {
+            if (post) {
+                const newPost: NewPost = {
+                    imageURL: '/logocolor.svg',
+                    name: 'Now&Me',
+                    emoji: '🔥',
+                    time: 'Recent',
+                    content: post,
+                    comments: 0
+                }
+                setFeedPosts(newPost);
+                setPost("");
             }
-
-            setFeedPosts(newPost);
-            setPost("");
-
         }
+        else {
+            openModal();
+        }
+
     }
 
     return (

@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState, useContext } from "react"
+import { UserStatusContext } from "@/app/userStatus"
 import { Button } from "./ui/button"
 import {
     Card,
@@ -12,7 +13,7 @@ import {
 } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 interface LoginCardProps {
     toggleHandler: (arg0: string) => void;
     modal: boolean;
@@ -21,11 +22,13 @@ interface LoginCardProps {
 
 export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps) {
     const router = useRouter();
+    const pathname = usePathname();
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isEmail, setIsEmail] = useState(false);
-
+    const userStatus = useContext(UserStatusContext);
+    const login = userStatus?.login;
     function handleShowPassword() {
         setShowPassword(prev => !prev);
     }
@@ -33,6 +36,13 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
         event.preventDefault();
         if (user && password) {
             loginCaller();
+            if (pathname === '/feed') {
+                console.log(userStatus?.isLoggedIn);
+                modalhandler();
+            }
+        }
+        else {
+            router.push('/feed');
         }
     }
     function handleKeyChange(e: ChangeEvent<HTMLInputElement>) {
@@ -56,8 +66,15 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
                 body: JSON.stringify(data),
             });
             if (response.ok && response.status === 200) {
-                router.push('/feed');
-
+                if (login) {
+                    login();
+                    if (pathname === '/feed') {
+                        router.refresh();
+                    }
+                    else {
+                        router.push('/feed');
+                    }
+                }
             }
             else {
                 throw new Error('Request failed with status ' + response.status);
@@ -66,7 +83,6 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
             console.error('Error:', error);
         }
     }
-
     function handleClick() {
         toggleHandler('register');
     }
@@ -90,7 +106,7 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
                         <Image src='./Closebutton.svg' width={32} height={32} alt='close' onClick={handleModal} className="absolute top-2 right-2 cursor-pointer" />
                     }
                     <CardHeader className="space-y-1 text-center">
-                        <CardTitle className="text-sm font-normal text-greyed tracking-wider mt-3 mb-0.5">WELCOME BACK</CardTitle>
+                        <CardTitle className="text-sm font-normal text-greyed tracking-wide mt-3 mb-0.5">WELCOME BACK</CardTitle>
                         <CardDescription className="text-lg font-medium text-white">
                             Log into your account
                         </CardDescription>
@@ -98,7 +114,7 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
                     <CardContent className="grid gap-4 mt-5">
                         <div className="grid gap-2">
                             <Label htmlFor="email" className="text-[#C5C7CA]">Email or Username</Label>
-                            <Input required id="email" name="email" type={isEmail ? 'email' : 'text'} onChange={handleKeyChange} className="placeholder:text-[#7F8084] border-[#35373B]" placeholder="Enter your email or username"
+                            <Input id="email" name="email" type={isEmail ? 'email' : 'text'} onChange={handleKeyChange} className="placeholder:text-[#7F8084] border-[#35373B]" placeholder="Enter your email or username"
                                 onBlur={handleInputBlur}
                             />
                         </div>
@@ -108,7 +124,7 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
                                 <span className="text-[#C5C7CA] inline text-xs">Forgot password?</span>
                             </div>
                             <div className="relative">
-                                <Input required name="password" id="password" type={showPassword ? 'text' : 'password'} onChange={handleKeyChange} className="placeholder:text-[#7F8084] border-[#35373B] " placeholder="Enter your password" />
+                                <Input name="password" id="password" type={showPassword ? 'text' : 'password'} onChange={handleKeyChange} className="placeholder:text-[#7F8084] border-[#35373B] " placeholder="Enter your password" />
                                 <Image width={20} height={20}
                                     className="absolute top-1/2 transform -translate-y-1/2 right-4 cursor-pointer"
                                     alt="show password"
@@ -121,7 +137,7 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
 
                     </CardContent>
                     <CardFooter className="text-xs font-medium">
-                        <span className="text-[#7F8084]">Not registered yet?<span className="text-[#C5C7CA]" onClick={handleClick} > Register →</span></span>
+                        <span className="text-[#7F8084]">Not registered yet?<span className="text-[#C5C7CA] cursor-pointer" onClick={handleClick} > Register →</span></span>
                     </CardFooter>
                 </div>
             </form >

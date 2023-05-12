@@ -67,7 +67,8 @@ export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCar
             });
             if (response.ok && response.status === 201) {
                 router.push('/feed');
-
+                if (modal)
+                    modalhandler();
             }
             else {
                 throw new Error('Request failed with status ' + response.status);
