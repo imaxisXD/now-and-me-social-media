@@ -13,22 +13,22 @@ import {
 } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 interface LoginCardProps {
     toggleHandler: (arg0: string) => void;
     modal: boolean;
-    modalhandler: () => void;
+    closeModal: () => void;
 }
 
-export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps) {
+export function LoginCard({ toggleHandler, modal, closeModal }: LoginCardProps) {
     const router = useRouter();
-    const pathname = usePathname();
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isEmail, setIsEmail] = useState(false);
     const userStatus = useContext(UserStatusContext);
     const login = userStatus?.login;
+
     function handleShowPassword() {
         setShowPassword(prev => !prev);
     }
@@ -36,10 +36,6 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
         event.preventDefault();
         if (user && password) {
             loginCaller();
-            if (pathname === '/feed') {
-                console.log(userStatus?.isLoggedIn);
-                modalhandler();
-            }
         }
         else {
             router.push('/feed');
@@ -68,12 +64,10 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
             if (response.ok && response.status === 200) {
                 if (login) {
                     login();
-                    if (pathname === '/feed') {
-                        router.refresh();
+                    if (modal) {
+                        closeModal();
                     }
-                    else {
-                        router.push('/feed');
-                    }
+                    router.push('/feed');
                 }
             }
             else {
@@ -95,7 +89,7 @@ export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps
         return emailRegex.test(email);
     };
     function handleModal() {
-        modalhandler();
+        closeModal();
     }
 
     return (

@@ -26,7 +26,7 @@ export default function Feed() {
     function openModal() {
         setShowModal(true);
     }
-    function modalhandler() {
+    function closeModal() {
         setShowModal(false);
     }
     console.log('userstatus ' + userStatus?.isLoggedIn);
@@ -41,7 +41,7 @@ export default function Feed() {
             <FeedTimeLine feedPosts={feedPosts} />
             {(showModal) &&
                 <div className="fixed inset-0 flex items-center justify-center backdrop-filter backdrop-blur bg-opacity-90">
-                    <CardWrapper cardName="register" modal={true} modalhandler={modalhandler} />
+                    <CardWrapper cardName="register" modal={true} closeModal={closeModal} />
                 </div>
             }
         </main >

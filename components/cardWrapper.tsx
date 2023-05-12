@@ -5,23 +5,23 @@ import { RegisterCard } from "./registerCard";
 interface CardWrapperProps {
     cardName: string;
     modal?: boolean;
-    modalhandler?: (() => void) | undefined;
+    closeModal?: (() => void) | undefined;
 }
 
-export default function CardWrapper({ cardName, modal = false, modalhandler }: CardWrapperProps) {
+export default function CardWrapper({ cardName, modal = false, closeModal }: CardWrapperProps) {
 
     const [currCard, setCurrCard] = useState(cardName);
 
     function toggleHandler(newCardName: string) {
         setCurrCard(newCardName)
     }
-    const handleModal = modalhandler || (() => { });
+    const handleModal = closeModal || (() => { });
 
     if (currCard === 'login') {
-        return <LoginCard toggleHandler={toggleHandler} modal={modal} modalhandler={handleModal} />
+        return <LoginCard toggleHandler={toggleHandler} modal={modal} closeModal={handleModal} />
     }
     else
-        return <RegisterCard toggleHandler={toggleHandler} modal={modal} modalhandler={handleModal} />
+        return <RegisterCard toggleHandler={toggleHandler} modal={modal} closeModal={handleModal} />
 
 
 }

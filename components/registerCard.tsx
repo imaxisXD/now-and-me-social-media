@@ -1,7 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState, useContext } from "react"
+import { UserStatusContext } from "@/app/userStatus"
 import { Button } from "./ui/button"
 import {
     Card,
@@ -18,18 +19,20 @@ import { useRouter } from 'next/navigation';
 interface RegisterCardProps {
     toggleHandler: (arg0: string) => void;
     modal: boolean;
-    modalhandler: () => void;
+    closeModal: () => void;
 }
 
-export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCardProps) {
+export function RegisterCard({ toggleHandler, modal, closeModal }: RegisterCardProps) {
     const router = useRouter();
     const [user, setUser] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const userStatus = useContext(UserStatusContext);
+    const login = userStatus?.login;
 
     function handleModal() {
-        modalhandler();
+        closeModal();
     }
     function handleShowPassword() {
         setShowPassword(prev => !prev);
@@ -38,6 +41,9 @@ export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCar
         event.preventDefault();
         if (user && password) {
             registerCaller();
+        }
+        else {
+            router.push('/feed');
         }
     }
     function handleClick() {
@@ -66,9 +72,13 @@ export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCar
                 body: JSON.stringify(data),
             });
             if (response.ok && response.status === 201) {
-                router.push('/feed');
-                if (modal)
-                    modalhandler();
+                if (login) {
+                    login();
+                    if (modal) {
+                        closeModal();
+                    }
+                    router.push('/feed');
+                }
             }
             else {
                 throw new Error('Request failed with status ' + response.status);
