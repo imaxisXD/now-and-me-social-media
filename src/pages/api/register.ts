@@ -7,7 +7,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         handleRegistration(req, res);
     } else {
-        res.status(405).end(); // Method Not Allowed
+        res.status(405).end();
     }
 }
 function handleRegistration(req: NextApiRequest, res: NextApiResponse) {

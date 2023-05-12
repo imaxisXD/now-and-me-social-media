@@ -28,8 +28,6 @@ export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCar
     const [showPassword, setShowPassword] = useState(false);
 
     function handleModal() {
-        console.log('click');
-
         modalhandler();
     }
     function handleShowPassword() {
@@ -46,7 +44,6 @@ export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCar
     }
     function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
-        console.log(name, value);
         switch (name) {
             case 'email':
                 setUser(value);
