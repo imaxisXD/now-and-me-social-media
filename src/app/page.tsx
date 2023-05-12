@@ -1,10 +1,10 @@
 "use client"
 
 import Image from 'next/image'
-import { LoginCard } from '../../components/loginCard'
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert"
 import { XCircle } from "lucide-react"
 import { useState } from 'react';
+import CardWrapper from '../../components/cardWrapper'
 
 export default function Home() {
   const [alert, setAlert] = useState(true);
@@ -13,10 +13,12 @@ export default function Home() {
     setAlert(prev => !prev);
   }
 
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-customBg relative">
       <Image src='./nownmelogo.svg' alt='now and me' className="mb-12" width={40} height={40} />
-      <LoginCard handleAlert={handleAlert} />
+      <CardWrapper cardName="login" />
+
       {alert && <Alert className='w-auto flex h-auto max-w-sm fixed top-5 right-1'>
         <XCircle className="h-4 w-4 cursor-pointer" onClick={handleAlert} />
         <AlertTitle className='inline-block w-40 h-auto'>
