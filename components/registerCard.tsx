@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import { ChangeEvent, useState } from "react"
 import { Button } from "./ui/button"
 import {
@@ -14,20 +13,30 @@ import {
 } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
+import { useRouter } from 'next/navigation';
 
 interface RegisterCardProps {
-    toggleHandler: (arg0: string) => void
+    toggleHandler: (arg0: string) => void;
+    modal: boolean;
+    modalhandler: () => void;
 }
 
-export function RegisterCard({ toggleHandler }: RegisterCardProps) {
+export function RegisterCard({ toggleHandler, modal, modalhandler }: RegisterCardProps) {
+    const router = useRouter();
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
+    function handleModal() {
+        console.log('click');
+
+        modalhandler();
+    }
     function handleShowPassword() {
         setShowPassword(prev => !prev);
     }
-    function handleRegister() {
+    function handleRegister(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
         if (user && password) {
             registerCaller();
         }
@@ -69,8 +78,11 @@ export function RegisterCard({ toggleHandler }: RegisterCardProps) {
     }
     return (
         <Card className="w-full md:w-3/4 max-w-md h-fit max-h-md border-none bg-gradient-to-br p-0.5 from-[#969696] to-[#343434]">
-            <form >
-                <div className="bg-[#27292D] rounded-lg">
+            <form onSubmit={handleRegister}>
+                <div className="bg-[#27292D] rounded-lg relative">
+                    {modal &&
+                        <Image src='./Closebutton.svg' width={32} height={32} alt='close' onClick={handleModal} className="absolute top-2 right-2 cursor-pointer" />
+                    }
                     <CardHeader className="space-y-1 text-center">
                         <CardTitle className="text-sm font-normal text-greyed tracking-wider mt-3 mb-0.5">SIGN UP</CardTitle>
                         <CardDescription className="text-lg font-medium text-white">
@@ -100,10 +112,10 @@ export function RegisterCard({ toggleHandler }: RegisterCardProps) {
                                 />
                             </div>
                         </div>
-                        <Button className="w-full bg-btnBlue text-base font-normal" onClick={handleRegister}>Continue</Button>
+                        <Button className="w-full bg-btnBlue text-base font-normal" type='submit'>Continue</Button>
                     </CardContent>
                     <CardFooter className="text-xs font-medium">
-                        <span className="text-[#7F8084]">Already have an account?<span className="text-[#C5C7CA]" onClick={handleClick}> Login →</span></span>
+                        <span className="text-[#7F8084]">Already have an account?<span className="text-[#C5C7CA] cursor-pointer" onClick={handleClick}> Login →</span></span>
                     </CardFooter>
                 </div>
             </form>

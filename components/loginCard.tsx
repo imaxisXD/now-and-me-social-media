@@ -14,16 +14,17 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { useRouter } from 'next/navigation';
 interface LoginCardProps {
-    toggleHandler: (arg0: string) => void
+    toggleHandler: (arg0: string) => void;
+    modal: boolean;
+    modalhandler: () => void;
 }
 
-export function LoginCard({ toggleHandler }: LoginCardProps) {
+export function LoginCard({ toggleHandler, modal, modalhandler }: LoginCardProps) {
     const router = useRouter();
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isEmail, setIsEmail] = useState(false);
-
 
     function handleShowPassword() {
         setShowPassword(prev => !prev);
@@ -33,9 +34,7 @@ export function LoginCard({ toggleHandler }: LoginCardProps) {
         if (user && password) {
             loginCaller();
         }
-
     }
-
     function handleKeyChange(e: ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
         switch (name) {
@@ -79,12 +78,17 @@ export function LoginCard({ toggleHandler }: LoginCardProps) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
-
+    function handleModal() {
+        modalhandler();
+    }
 
     return (
         <Card className="w-full md:w-3/4 max-w-md h-fit max-h-md border-none bg-gradient-to-br p-0.5 from-[#969696] to-[#343434]">
             <form onSubmit={handleLogin}>
-                <div className="bg-[#27292D] rounded-lg">
+                <div className="bg-[#27292D] rounded-lg relative">
+                    {modal &&
+                        <Image src='./Closebutton.svg' width={32} height={32} alt='close' onClick={handleModal} className="absolute top-2 right-2 cursor-pointer" />
+                    }
                     <CardHeader className="space-y-1 text-center">
                         <CardTitle className="text-sm font-normal text-greyed tracking-wider mt-3 mb-0.5">WELCOME BACK</CardTitle>
                         <CardDescription className="text-lg font-medium text-white">

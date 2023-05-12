@@ -18,7 +18,6 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-customBg relative">
       <Image src='./nownmelogo.svg' alt='now and me' className="mb-12" width={40} height={40} />
       <CardWrapper cardName="login" />
-
       {alert && <Alert className='w-auto flex h-auto max-w-sm fixed top-5 right-1'>
         <XCircle className="h-4 w-4 cursor-pointer" onClick={handleAlert} />
         <AlertTitle className='inline-block w-40 h-auto'>
@@ -28,7 +27,6 @@ export default function Home() {
           You can add enter <strong>username: <span className="text-[#ff6d42]">nowandme</span></strong> and <strong>password: <span className="text-[#ff6d42]">nowandme</span></strong> / Or can create a new account.
         </AlertDescription>
       </Alert>}
-
     </main>
   )
 }

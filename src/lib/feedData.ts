@@ -3,10 +3,10 @@
 export let feedData = [
     {
         imageURL: 'https://avatars.githubusercontent.com/u/56172425?v=4',
-        name: 'Abhishek',
+        name: 'Abhishek (Thats Me 👋🏻)',
         emoji: '🎉',
         time: '1mins ago',
-        content: 'Manifesting to be part of Now&Me 🧿, Wish me luck.',
+        content: 'Manifesting to be part of Now&Me 🧿, Wish me luck. 🤞🏻',
         comments: 1111
 
     },
