@@ -2,9 +2,8 @@
 import { FeedPost } from "../../../components/feedPost"
 import { FeedTimeLine } from "../../../components/feedTimeLine"
 import { feedData } from "@/lib/feedData";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import CardWrapper from "../../../components/cardWrapper";
-import { UserStatusContext } from "@/app/userStatus"
 import AlertCard from "../../../components/alertCard";
 
 
@@ -19,7 +18,6 @@ interface NewPost {
 export default function Feed() {
     const [feedPosts, setFeedPosts] = useState(feedData);
     const [showModal, setShowModal] = useState(false);
-    const userStatus = useContext(UserStatusContext);
 
     function handleNewPostCreation(newPost: NewPost) {
         setFeedPosts([newPost, ...feedPosts]);
@@ -30,7 +28,6 @@ export default function Feed() {
     function closeModal() {
         setShowModal(false);
     }
-    console.log('userstatus ' + userStatus?.isLoggedIn);
 
     return (
         <main className="flex min-h-screen flex-col items-center bg-customBg relative pb-3">

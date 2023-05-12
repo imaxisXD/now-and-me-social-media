@@ -56,7 +56,7 @@ export function FeedPost({ setFeedPosts, openModal }: FeedPostProp) {
                     <div className="grid gap-2 bg-[#191920] p-3 h-auto rounded-lg">
                         <div className="flex">
                             <div className="bg-[#27292D] flex rounded-full items-center justify-center w-10 h-10">
-                                <span>🚀</span>
+                                <span>💜</span>
                             </div>
                             <Textarea required className="bg-transparent border-none outline-none text-[#7F8084] placeholder:text-[#7F8084]" placeholder="How are you feeling today?" onInput={(e: React.ChangeEvent<HTMLTextAreaElement>) => setPost(e.target.value)} value={post} />
                         </div>

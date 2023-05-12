@@ -1,4 +1,4 @@
-"use client"
+
 
 import Image from 'next/image';
 import CardWrapper from '../../components/cardWrapper'
